@@ -23,24 +23,20 @@ public class Customer {
 		return amount;
 	}
 	
-	protected boolean deposit(double amount) {
+	public void deposit(double amount) {
 		if (amount > 0) {
 			this.amount += amount;
-			return true;
 		}
-		return false;
 	}
 	
-	protected boolean withdraw(double amount) {
+	public void withdraw(double amount) {
 		if (amount > 0 && amount < this.amount) {
 			this.amount -= amount;
-			return true;
 		}
-		return false;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Hello, %s! Your balance is $%.2f", name, amount);
+		return String.format("%s, $%.2f", name, amount);
 	}
 }

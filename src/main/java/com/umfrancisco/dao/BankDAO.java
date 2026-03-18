@@ -28,7 +28,7 @@ public class BankDAO {
 	public static String printBankNumbers(List<Bank> banks) {
 		String banksStrFormatted = "";
 		for (Bank b : banks) {
-			banksStrFormatted += b.getBankNumber()+" - "+b.getName()+"\n";
+			banksStrFormatted += b.bankNumber()+" - "+b.name()+"\n";
 		}
 		return banksStrFormatted;
 	}
