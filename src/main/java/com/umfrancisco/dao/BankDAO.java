@@ -8,6 +8,12 @@ import com.umfrancisco.util.DatabaseConnection;
 
 public class BankDAO {
 	
+	public void addNewCustomer(Bank bank, int id, String name, double amount) {
+		bank.addNewCustomer(id, name, amount);
+		var customer = bank.getCustomer(id);
+		this.add(customer, bank);
+	}
+	
 	public void add(Customer customer, Bank bank) {
 		String sql = "INSERT INTO customer(customer_id, customer_name, bank_number, customer_amount) VALUES (?,?,?,?)";
 		try {

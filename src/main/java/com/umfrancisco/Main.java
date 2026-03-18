@@ -22,10 +22,7 @@ public class Main {
 		int size = names.length;
 		
 		for (int i = 0; i < 200; i++) {
-			bank.addNewCustomer(random.nextInt(9999), names[i % size], random.nextDouble(1000));
-		}
-		for (var customer : bank.customers()) {
-			dao.add(customer, bank);						
+			dao.addNewCustomer(bank, random.nextInt(9999), names[i % size], random.nextDouble(1000));
 		}
 	}
 }
