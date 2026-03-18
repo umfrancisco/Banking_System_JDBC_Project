@@ -1,35 +1,26 @@
 package com.umfrancisco.dao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import com.umfrancisco.domain.Bank;
+import com.umfrancisco.domain.Customer;
 import com.umfrancisco.util.DatabaseConnection;
 
 public class BankDAO {
 	
-	public List<Bank> getBanks() {
-		List<Bank> banks = new ArrayList<>();
-		try (var conn = DatabaseConnection.getConnection("bank"); var stmt = conn.createStatement();) {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM bank");
-			while (rs.next()) {
-				int number = rs.getInt("bank_number");
-				String name = rs.getString("bank_name");
-				banks.add(new Bank(number, name));
-			}
+	public void add(Customer customer, Bank bank) {
+		String sql = "INSERT INTO customer(customer_id, customer_name, bank_number, customer_amount) VALUES (?,?,?,?)";
+		var con = DatabaseConnection.getConnection();
+		try {
+			var ps = con.prepareStatement(sql);
+			ps.setInt(1, customer.id());
+			ps.setString(2, customer.name());
+			ps.setInt(3, bank.bankNumber());
+			ps.setDouble(4, customer.amount());
+			ps.execute();
+			System.out.println(LocalDateTime.now()+": "+sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return banks;
-	}
-	
-	public static String printBankNumbers(List<Bank> banks) {
-		String banksStrFormatted = "";
-		for (Bank b : banks) {
-			banksStrFormatted += b.bankNumber()+" - "+b.name()+"\n";
-		}
-		return banksStrFormatted;
 	}
 }

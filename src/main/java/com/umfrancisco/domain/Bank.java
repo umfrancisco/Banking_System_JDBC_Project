@@ -26,7 +26,7 @@ public class Bank {
 	
 	public Customer getCustomer(int id) {
 		for (var customer : customers) {
-			if (customer.getId() == id) {
+			if (customer.id() == id) {
 				return customer;
 			}
 		}

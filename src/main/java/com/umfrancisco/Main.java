@@ -1,13 +1,23 @@
 package com.umfrancisco;
 
+import java.util.Random;
+
+import com.umfrancisco.dao.BankDAO;
 import com.umfrancisco.domain.Bank;
 
 public class Main {
 	public static void main(String[] args) {
+		BankDAO dao = new BankDAO();
 		Bank bank = new Bank(100, "São Paulo");
-		bank.addNewCustomer(1, "Bob", 500);
-		var bob = bank.getCustomer(1);
-		bob.withdraw(120);
-		System.out.println(bob);
+		String[] names = {"Ann", "Bob", "Carole", "Dave", "Ed"};
+		int size = names.length;
+		
+		for (int i = 0; i < 25; i++) {
+			bank.addNewCustomer(i, names[i % size], new Random().nextDouble(1000));
+		}
+		for (var customer : bank.customers()) {
+			dao.add(customer, bank);						
+		}
+		
 	}
 }

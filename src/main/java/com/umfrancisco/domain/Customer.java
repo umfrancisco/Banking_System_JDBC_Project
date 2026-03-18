@@ -11,15 +11,15 @@ public class Customer {
 		this.amount = amount;
 	}
 	
-	protected int getId() {
+	public int id() {
 		return id;
 	}
 	
-	protected String getName() {
+	public String name() {
 		return name;
 	}
 	
-	protected double getAmount() {
+	public double amount() {
 		return amount;
 	}
 	
