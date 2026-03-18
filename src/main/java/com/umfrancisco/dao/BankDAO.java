@@ -25,8 +25,8 @@ public class BankDAO {
 		}
 	}
 	
-	public void selectAll() {
-		String sql = "SELECT * FROM customer";
+	public void selectAll(int number) {
+		String sql = "SELECT * FROM customer WHERE bank_number = "+number;
 		try {
 			var con = DatabaseConnection.getConnection();
 			var ps = con.prepareStatement(sql);
