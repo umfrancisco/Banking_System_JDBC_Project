@@ -10,8 +10,8 @@ public class BankDAO {
 	
 	public void add(Customer customer, Bank bank) {
 		String sql = "INSERT INTO customer(customer_id, customer_name, bank_number, customer_amount) VALUES (?,?,?,?)";
-		var con = DatabaseConnection.getConnection();
 		try {
+			var con = DatabaseConnection.getConnection();
 			var ps = con.prepareStatement(sql);
 			ps.setInt(1, customer.id());
 			ps.setString(2, customer.name());
@@ -19,6 +19,26 @@ public class BankDAO {
 			ps.setDouble(4, customer.amount());
 			ps.execute();
 			System.out.println(LocalDateTime.now()+": "+sql);
+			DatabaseConnection.closeConnection(con, ps, null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void selectAll() {
+		String sql = "SELECT * FROM customer";
+		try {
+			var con = DatabaseConnection.getConnection();
+			var ps = con.prepareStatement(sql);
+			var rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				int customerId = rs.getInt("customer_id");
+				String customerName = rs.getString("customer_name");
+				int bankNumber = rs.getInt("bank_number");
+				double customerAmount = rs.getDouble("customer_amount");
+				System.out.println("%5d %10s %5d $5%.2f".formatted(customerId, customerName, bankNumber, customerAmount));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

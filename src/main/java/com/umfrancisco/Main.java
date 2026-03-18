@@ -10,14 +10,16 @@ public class Main {
 		BankDAO dao = new BankDAO();
 		Bank bank = new Bank(100, "São Paulo");
 		String[] names = {"Ann", "Bob", "Carole", "Dave", "Ed"};
+		Random random = new Random();
 		int size = names.length;
 		
-		for (int i = 0; i < 25; i++) {
-			bank.addNewCustomer(i, names[i % size], new Random().nextDouble(1000));
+		for (int i = 0; i < 200; i++) {
+			bank.addNewCustomer(random.nextInt(9999), names[i % size], random.nextDouble(1000));
 		}
 		for (var customer : bank.customers()) {
 			dao.add(customer, bank);						
 		}
 		
+		dao.selectAll();
 	}
 }
