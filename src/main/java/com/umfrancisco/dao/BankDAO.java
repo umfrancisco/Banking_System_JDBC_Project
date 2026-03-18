@@ -31,9 +31,8 @@ public class BankDAO {
 		}
 	}
 	
-	public String countCustomersPerBank(int number) {
-		String result = "";
-		String sql = "SELECT COUNT(*) FROM customer WHERE bank_number = "+number;
+	public void count() {
+		String sql = "SELECT COUNT(*) FROM customer";
 		try {
 			var con = DatabaseConnection.getConnection();
 			var ps = con.prepareStatement(sql);
@@ -41,20 +40,17 @@ public class BankDAO {
 			
 			while (rs.next()) {
 				int count = rs.getInt(1);
-				result += "COUNT_CUSTOMERS BANK %d = %d\n".formatted(number, count);
-				System.out.print(result);
+				System.out.println("COUNT_CUSTOMERS = %d".formatted(count));
 			}
 			DatabaseConnection.closeConnection(con, ps, rs);
-			return result;
 		} catch (SQLException e) {
-			return e.getMessage();
+			e.printStackTrace();
 		}
 	}
 	
-	public String selectAll(int number) {
-		String result = "";
-		result += countCustomersPerBank(number);
-		String sql = "SELECT * FROM customer WHERE bank_number = "+number;
+	public void selectAll() {
+		count();
+		String sql = "SELECT * FROM customer";
 		try {
 			var con = DatabaseConnection.getConnection();
 			var ps = con.prepareStatement(sql);
@@ -65,13 +61,11 @@ public class BankDAO {
 				String customerName = rs.getString("customer_name");
 				int bankNumber = rs.getInt("bank_number");
 				double customerAmount = rs.getDouble("customer_amount");
-				result += "%5d %10s %5d $5%.2f\n".formatted(customerId, customerName, bankNumber, customerAmount);
-				System.out.print(result);
+				System.out.println("%5d %10s %5d $5%.2f".formatted(customerId, customerName, bankNumber, customerAmount));
 			}
 			DatabaseConnection.closeConnection(con, ps, rs);
-			return result;
 		} catch (SQLException e) {
-			return e.getMessage();
+			e.printStackTrace();
 		}
 	}
 }
